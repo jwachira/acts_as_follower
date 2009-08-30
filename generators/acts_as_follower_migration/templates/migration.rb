@@ -3,6 +3,7 @@ class ActsAsFollowerMigration < ActiveRecord::Migration
     create_table :follows, :force => true do |t|
       t.references :followable, :polymorphic => true, :null => false
       t.references :follower,   :polymorphic => true, :null => false
+      t.date       :blocked_at
       t.timestamps      
     end
 

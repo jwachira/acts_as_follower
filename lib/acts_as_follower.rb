@@ -50,6 +50,11 @@ module ActiveRecord #:nodoc:
           end
         end
         
+        #check if the follower has been blocked
+        def blocked_by?(followable)
+          Follow.find(:first, :conditions => ["follower_id = ? AND follower_type = ? AND followable_id = ? AND followable_type = ? AND blocked_at IS NOT NULL", self.id, parent_class_name(self), followable.id, parent_class_name(followable)]) ? true : false
+        end
+
         # TODO: Remove from public API.
         # Returns the follow records related to this instance by type.
         def follows_by_type(followable_type)
@@ -83,7 +88,7 @@ module ActiveRecord #:nodoc:
         end
         
         private
-        
+                
         # Returns a follow record for the current instance and followable object.
         def get_follow(followable)
           Follow.find(:first, :conditions => ["follower_id = ? AND follower_type = ? AND followable_id = ? AND followable_type = ?", self.id, parent_class_name(self), followable.id, parent_class_name(followable)])
