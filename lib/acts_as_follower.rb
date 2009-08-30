@@ -58,7 +58,7 @@ module ActiveRecord #:nodoc:
         # TODO: Remove from public API.
         # Returns the follow records related to this instance by type.
         def follows_by_type(followable_type)
-          Follow.find(:all, :conditions => ["follower_id = ? AND follower_type = ? AND followable_type = ?", self.id, parent_class_name(self), followable_type])
+          Follow.find(:all, :conditions => ["follower_id = ? AND follower_type = ? AND followable_type = ?", self.id, parent_class_name(self), followable_type.camelize])
         end
         
         # TODO: Remove from public API.

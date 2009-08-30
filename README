@@ -85,6 +85,16 @@ ActsAsFollower Methods
 
 		book.followed_by?(current_user) # Returns true or false depending on if current_user is following book
 
+New methods, i guess someone can clean them up to dry up the code! 
+
+# added a column blocked_at(as a datestamp)
+user.blocked_by?(current_user) - check to determine if one object has been blocked by another
+current_user.block_follower(user) - block object user from following
+current_user.followers_by_type(followable_type) - returns an array of all object of a specific type following you
+current_user.blocked_followers - returns an array of all the objects you have blocked
+current_user.blocked_count - returns a count of blocked object, you can unblock the users by doing a 
+current_user.unblock_follower(user)
+
 
 Comments
 =======

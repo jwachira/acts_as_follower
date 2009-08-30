@@ -37,6 +37,11 @@ module ActiveRecord #:nodoc:
               self.id, parent_class_name(self)]).collect {|f| f.follower }
         end
         
+        #returns an array of all objects following a given followable object.
+        def followers_by_type(follower_type)
+          Follow.find(:all, :conditions => ["followable_id = ? AND followable_type = ? AND follower_type = ? and blocked_at IS NULL", self.id, parent_class_name(self), follower_type.camelize])
+        end
+        
         # returns all blocked following objects
         def blocked_followers
           Follow.find(:all, :include => [:follower], :conditions => ["followable_id = ? AND followable_type = ? AND blocked_at IS NOT NULL", 
